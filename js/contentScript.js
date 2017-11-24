@@ -32,14 +32,6 @@ $(document).ready(() => {
         fillUserInfo(indexPax, userInfo);
     }
 
-    /*$('#mp3_trato_asistente_0_mr').prop( "checked", true );
-    $('#mp3_nombre_0').val('Rafael');
-    $('#mp3_apellidos_0').val(SURNAME);
-
-    fillUserInfo(1);
-    fillUserInfo(2);
-    fillUserInfo(3);
-
     $('#mp2_email_reg').val(EMAIL);
     $('#mp2_email_reg2').val(EMAIL);
     $('#mp2_cp_reg').val('08830');
@@ -63,7 +55,7 @@ $(document).ready(() => {
     setTimeout(function (){
         $('#mp2_use_first_asistant_data').click();
         $('#btn_finalizar_continuar').click();
-    }, 1000);*/
+    }, 1000);
 });
 
 function getUserInfo() {
