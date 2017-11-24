@@ -2,9 +2,37 @@ console.log('carrito chrome extension');
 
 const SURNAME = 'Marpinez';
 const EMAIL = 'rafael.mateo@atrapalo.com';
+const NAMES = [
+    { gender : 'mrs', name : 'Sara' },
+    { gender : 'mr', name : 'Sebas' },
+    { gender : 'mr',  name : 'Manri' },
+    { gender : 'mr',  name : 'Cyril' },
+    { gender : 'mr',  name : 'Jordi' },
+    { gender : 'mr',  name : 'Fran' },
+    { gender : 'mrs',  name : 'Raquel' },
+    { gender : 'mr',  name : 'Rafael' },
+    { gender : 'mr',  name : 'José Oriol' },
+    { gender : 'mr',  name : 'Iñaki' },
+    { gender : 'mrs',  name : 'Judit' },
+    { gender : 'mrs',  name : 'Ivana' },
+    { gender : 'mr',  name : 'Napo' },
+    { gender : 'mrs',  name : 'Carla' },
+    { gender : 'mr',  name : 'Bauti' },
+    { gender : 'mr',  name : 'Pepe' }
+];
 
-$(document).ready(()=> {
-    $('#mp3_trato_asistente_0_mr').prop( "checked", true );
+$(document).ready(() => {
+    let numPax = $('div[id^="bloqueAsistente_"]').length;
+    let userInfo = { gender : 'mr',  name : 'Rafael' };
+
+    for (indexPax = 0; indexPax < numPax; indexPax++) {
+        if (indexPax !== 0) {
+            userInfo = getUserInfo();
+        }
+        fillUserInfo(indexPax, userInfo);
+    }
+
+    /*$('#mp3_trato_asistente_0_mr').prop( "checked", true );
     $('#mp3_nombre_0').val('Rafael');
     $('#mp3_apellidos_0').val(SURNAME);
 
@@ -35,14 +63,21 @@ $(document).ready(()=> {
     setTimeout(function (){
         $('#mp2_use_first_asistant_data').click();
         $('#btn_finalizar_continuar').click();
-    }, 1000);
+    }, 1000);*/
 });
 
-function fillUserInfo(index) {
-    $('#mp3_trato_asistente_' + index + '_mrs').prop( "checked", true );
-    $('#mp3_nombre_' + index).val('Raquel');
-    $('#mp3_apellidos_' + index).val(SURNAME);
-    $('#mp3_f_nacimiento_dia_' + index).val('10');
-    $('#mp3_f_nacimiento_mes_' + index).val('10');
-    $('#mp3_f_nacimiento_anyo_' + index).val('2016');
+function getUserInfo() {
+    return NAMES[Math.floor(Math.random() * NAMES.length)];
+}
+
+function fillUserInfo(index, userInfo) {
+    $('#mp3_trato_asistente_' + index + '_' + userInfo.gender).prop( "checked", true );
+    $('#mp3_nombre_' + index).val(userInfo.name);
+    $('#mp3_f_nacimiento_dia_' + index).val($('#mp3_f_nacimiento_dia_'  + index + ' option:eq(1)').val());
+    $('#mp3_f_nacimiento_mes_' + index).val($('#mp3_f_nacimiento_mes_'  + index + ' option:eq(1)').val());
+    $('#mp3_f_nacimiento_anyo_' + index).val($('#mp3_f_nacimiento_anyo_'  + index + ' option:eq(1)').val());
+
+    setTimeout(() => {
+        $('#mp3_apellidos_' + index).val(SURNAME).trigger('click');
+    }, 1000);
 }
