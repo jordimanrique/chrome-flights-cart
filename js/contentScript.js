@@ -68,6 +68,9 @@ function fillUserInfo(index, userInfo) {
     $('#mp3_f_nacimiento_dia_' + index).val($('#mp3_f_nacimiento_dia_'  + index + ' option:eq(1)').val());
     $('#mp3_f_nacimiento_mes_' + index).val($('#mp3_f_nacimiento_mes_'  + index + ' option:eq(1)').val());
     $('#mp3_f_nacimiento_anyo_' + index).val($('#mp3_f_nacimiento_anyo_'  + index + ' option:eq(1)').val());
+    $('#mp3_'+ index +'_caducidad_documento_dia').val($('#mp3_'+ index +'_caducidad_documento_dia option:eq(1)').val());
+    $('#mp3_'+ index +'_caducidad_documento_mes').val($('#mp3_'+ index +'_caducidad_documento_mes option:eq(1)').val());
+    $('#mp3_'+ index +'_caducidad_documento_anyo').val($('#mp3_'+ index +'_caducidad_documento_anyo option:eq(3)').val());
 
     setTimeout(() => {
         $('#mp3_apellidos_' + index).val(SURNAME).trigger('click');
