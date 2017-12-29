@@ -1,25 +1,39 @@
 const storage = chrome.storage.local;
-const manifest = chrome.runtime.getManifest();
-const version = manifest.version;
 
-let infoActive = false;
+// storage.get(['results'], (items) => {
+//     const data = items.results;
+//     console.log('GET STORAGE');
+//     console.log(data);
+// });
+//
+// chrome.storage.onChanged.addListener((changes) => {
+//
+//     if (changes.results) {
+//         const data = changes.results.newValue;
+//         console.log('CHANGES STORAGE');
+//         console.log(data);
+//     }
+// });
 
-storage.get(['results', 'showInfoActive'], (items) => {
-    const data = items.results.data;
-    window.data = items.results;
-    infoActive = items.showInfoActive;
-    renderView(data, infoActive);
+
+$('#users').submit(() => {
+    let data = {
+        name: $('#name').val(),
+        email: $('#email').val()
+    };
+    storage.set({'results': data}, () => {
+        sendMessage({
+            type: 'COMMAND',
+            payload: 'show-users'
+        });
+    });
 });
 
-chrome.storage.onChanged.addListener((changes) => {
-
-    if (changes.showInfoActive) {
-        infoActive = changes.showInfoActive.newValue;
-    }
-
-    if (changes.results) {
-        const data = changes.results.newValue.data;
-        window.data = changes.results.newValue;
-        renderView(data, infoActive);
-    }
-});
+function sendMessage(message) {
+    chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+        let lastTabId = tabs[0].id;
+        if (lastTabId) {
+            chrome.tabs.sendMessage(lastTabId, message);
+        }
+    });
+}

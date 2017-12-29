@@ -1,3 +1,5 @@
+const storage = chrome.storage.local;
+
 console.log('carrito chrome extension');
 
 const SURNAME = 'Marpinez';
@@ -75,4 +77,26 @@ function fillUserInfo(index, userInfo) {
     setTimeout(() => {
         $('#mp3_apellidos_' + index).val(SURNAME).trigger('click');
     }, 1000);
+}
+
+chrome.runtime.onMessage.addListener((message) => {
+    switch (message.type) {
+        case 'COMMAND':
+            switch (message.payload) {
+                case 'show-users':
+                    getDataUsers();
+                    break;
+            }
+    }
+});
+
+function getDataUsers() {
+    storage.get(['results'], (items) => {
+        const data = items.results;
+        $('#mp3_nombre_' + 0).val(data.name);
+        $('#mp2_use_first_asistant_data').click();
+        $('#mp2_email_reg').val(data.email);
+        $('#mp2_email_reg2').val(data.email);
+        $('#mp2_use_first_asistant_data').click();
+    });
 }
