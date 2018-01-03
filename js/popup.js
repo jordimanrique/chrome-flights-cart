@@ -1,7 +1,8 @@
 const storage = chrome.storage.local;
 
-$('#users').submit(() => {
+$('#submit').click(() => {
     let data = {
+        gender: $('input[name=gender]:checked').val(),
         name: $('#name').val(),
         email: $('#email').val()
     };

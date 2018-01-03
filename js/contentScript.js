@@ -41,6 +41,7 @@ function validateUserFromStorage() {
 
 function setDataUserDefault(user) {
     if (user) {
+        userDefault.gender = user.gender;
         userDefault.name = user.name;
         userDefault.email = user.email;
     }
@@ -122,7 +123,8 @@ function getDataUserFormStorage() {
 
 function changeDataUserDefaultIntoForm()
 {
-    $('#mp3_nombre_' + 0).val(userDefault.name);
+    $('#mp3_trato_asistente_0_' + userDefault.gender).prop( "checked", true );
+    $('#mp3_nombre_0').val(userDefault.name);
     $('#mp2_use_first_asistant_data').click();
     $('#mp2_email_reg').val(userDefault.email);
     $('#mp2_email_reg2').val(userDefault.email);
