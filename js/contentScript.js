@@ -3,7 +3,6 @@ const storage = chrome.storage.local;
 console.log('carrito chrome extension');
 
 const SURNAME = 'Marpinez';
-const EMAIL = 'rafael.mateo@atrapalo.com';
 const NAMES = [
     { gender : 'mrs', name : 'Sara' },
     { gender : 'mr', name : 'Sebas' },
@@ -23,42 +22,66 @@ const NAMES = [
     { gender : 'mr',  name : 'Pepe' }
 ];
 
-$(document).ready(() => {
-    let numPax = $('div[id^="bloqueAsistente_"]').length;
-    let userInfo = { gender : 'mr',  name : 'Rafael' };
+let userDefault = {
+    gender: 'mr',
+    name: 'Rafael',
+    email: 'rafael.mateo@atrapalo.com'
+};
 
-    for (indexPax = 0; indexPax < numPax; indexPax++) {
+$(document).ready(() => {
+    validateUserFromStorage();
+});
+
+function validateUserFromStorage() {
+    storage.get(['results'], (items) => {
+        setDataUserDefault(items.results);
+        fillForm();
+    });
+}
+
+function setDataUserDefault(user) {
+    if (user) {
+        userDefault.name = user.name;
+        userDefault.email = user.email;
+    }
+}
+
+function fillForm() {
+    let numPax = $('div[id^="bloqueAsistente_"]').length;
+    let userInfo = userDefault;
+
+    for (let indexPax = 0; indexPax < numPax; indexPax++) {
         if (indexPax !== 0) {
             userInfo = getUserInfo();
         }
         fillUserInfo(indexPax, userInfo);
     }
 
-    $('#mp2_email_reg').val(EMAIL);
-    $('#mp2_email_reg2').val(EMAIL);
+    $('#mp2_email_reg').val(userDefault.email);
+    $('#mp2_email_reg2').val(userDefault.email);
     $('#mp2_cp_reg').val('08830');
     $('#mp2_direccion_reg').val('Carrer de les proves de ticketing');
     $('#mp2_poblacion_reg').val('Sant Boi de Llobregat');
     $('#mp2_regione_reg').val('1').trigger('change');
     $('#mp2_movil_reg').val('+34 646 64 64 64');
 
-    $('#check_addons_rechaza').prop( "checked", true );
-    $('#check_seguro_cancelacion_rechaza').prop( "checked", true );
+    $('#check_addons_rechaza').prop("checked", true);
+    $('#check_seguro_cancelacion_rechaza').prop("checked", true);
 
     $('#sync-payer-with-asistente-0').click();
 
     $('#mp4_num_tarjeta').val('4548812049400004');
     $('#mp4_Month').val('04').trigger('change');
-    $('#mp4_Year').val(((new Date).getFullYear()+1).toString().substr(-2)).trigger('change');
+    $('#mp4_Year').val(((new Date).getFullYear() + 1).toString().substr(-2)).trigger('change');
     $('#mp4_cvv').val('123');
     $('#mp4_tipo_tarjeta').val('VID').trigger('change');
     // $(window).scrollTop($('#fsCarritoBottom').offset().top);
 
-    setTimeout(function (){
+    setTimeout(function () {
         $('#mp2_use_first_asistant_data').click();
         $('#btn_finalizar_continuar').click();
     }, 1000);
-});
+}
 
 function getUserInfo() {
     return NAMES[Math.floor(Math.random() * NAMES.length)];
@@ -83,20 +106,25 @@ chrome.runtime.onMessage.addListener((message) => {
     switch (message.type) {
         case 'COMMAND':
             switch (message.payload) {
-                case 'show-users':
-                    getDataUsers();
+                case 'change-userDefault':
+                    getDataUserFormStorage();
                     break;
             }
     }
 });
 
-function getDataUsers() {
+function getDataUserFormStorage() {
     storage.get(['results'], (items) => {
-        const data = items.results;
-        $('#mp3_nombre_' + 0).val(data.name);
-        $('#mp2_use_first_asistant_data').click();
-        $('#mp2_email_reg').val(data.email);
-        $('#mp2_email_reg2').val(data.email);
-        $('#mp2_use_first_asistant_data').click();
+        setDataUserDefault(items.results);
+        changeDataUserDefaultIntoForm();
     });
+}
+
+function changeDataUserDefaultIntoForm()
+{
+    $('#mp3_nombre_' + 0).val(userDefault.name);
+    $('#mp2_use_first_asistant_data').click();
+    $('#mp2_email_reg').val(userDefault.email);
+    $('#mp2_email_reg2').val(userDefault.email);
+    $('#mp2_use_first_asistant_data').click();
 }
