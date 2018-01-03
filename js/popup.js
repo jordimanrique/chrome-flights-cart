@@ -1,6 +1,9 @@
 const storage = chrome.storage.local;
+const manifest = chrome.runtime.getManifest();
+const version = manifest.version;
 
 $(document).ready(() => {
+    $('#version').html(version);
     validateUserFromStorage();
 });
 

@@ -1,7 +1,7 @@
 body {
   margin: 10px;
   white-space: nowrap;
-  min-width: 200px;
+  min-width: 250px;
 }
 
 h1 {
@@ -13,10 +13,17 @@ h1 {
 }
 
 #container {
-  font-size: .8rem;
   align-items: center;
   display: flex;
   justify-content: space-between;
+}
+
+#container #gender {
+  margin-bottom: .3rem;
+}
+
+#container, #container input, #submit {
+  font-size: .8rem;
 }
 
 span.item {
