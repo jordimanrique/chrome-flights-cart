@@ -1,5 +1,27 @@
 const storage = chrome.storage.local;
 
+$(document).ready(() => {
+    validateUserFromStorage();
+});
+
+function validateUserFromStorage() {
+    storage.get(['results'], (items) => {
+        fillPopup(items.results);
+    });
+}
+
+function fillPopup(user) {
+    if (user) {
+        if (user.gender === 'mr') {
+            $('#male').prop( "checked", true );
+        } else {
+            $('#female').prop( "checked", true );
+        }
+        $('#name').val(user.name);
+        $('#email').val(user.email);
+    }
+}
+
 $('#submit').click(() => {
     let data = {
         gender: $('input[name=gender]:checked').val(),
