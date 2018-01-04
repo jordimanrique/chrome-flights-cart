@@ -37,6 +37,7 @@ $('#submit').click(() => {
             payload: 'change-userDefault'
         });
     });
+    window.close();
 });
 
 function sendMessage(message) {
