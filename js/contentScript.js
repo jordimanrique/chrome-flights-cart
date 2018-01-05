@@ -28,60 +28,63 @@ let userDefault = {
     email: 'rafael.mateo@atrapalo.com'
 };
 
+let active = false;
+
 $(document).ready(() => {
-    validateUserFromStorage();
+  validateUserFromStorage();
 });
 
 function validateUserFromStorage() {
     storage.get(['results'], (items) => {
-        setDataUserDefault(items.results);
+        refreshDefaultUser(items.results);
         fillForm();
     });
 }
 
-function setDataUserDefault(user) {
-    if (user) {
-        userDefault.gender = user.gender;
-        userDefault.name = user.name;
-        userDefault.email = user.email;
-    }
-}
-
 function fillForm() {
-    let numPax = $('div[id^="bloqueAsistente_"]').length;
-    let userInfo = userDefault;
 
-    for (let indexPax = 0; indexPax < numPax; indexPax++) {
+    if (active) {
+      let numPax = $('div[id^="bloqueAsistente_"]').length;
+      let userInfo = userDefault;
+
+      $('#mp3_trato_asistente_0_' + userDefault.gender).prop("checked", true);
+      $('#mp3_nombre_0').val(userDefault.name);
+      $('#mp2_email_reg').val(userDefault.email);
+      $('#mp2_email_reg2').val(userDefault.email);
+
+      for (let indexPax = 0; indexPax < numPax; indexPax++) {
         if (indexPax !== 0) {
-            userInfo = getUserInfo();
+          userInfo = getUserInfo();
         }
         fillUserInfo(indexPax, userInfo);
-    }
+      }
 
-    $('#mp2_email_reg').val(userDefault.email);
-    $('#mp2_email_reg2').val(userDefault.email);
-    $('#mp2_cp_reg').val('08830');
-    $('#mp2_direccion_reg').val('Carrer de les proves de ticketing');
-    $('#mp2_poblacion_reg').val('Sant Boi de Llobregat');
-    $('#mp2_regione_reg').val('1').trigger('change');
-    $('#mp2_movil_reg').val('+34 646 64 64 64');
+      $('#mp2_nombre_reg').val(userDefault.name);
+      $('#mp2_email_reg').val(userDefault.email);
+      $('#mp2_email_reg2').val(userDefault.email);
+      $('#mp2_cp_reg').val('08830');
+      $('#mp2_direccion_reg').val('Carrer de les proves de ticketing');
+      $('#mp2_poblacion_reg').val('Sant Boi de Llobregat');
+      $('#mp2_regione_reg').val('1').trigger('change');
+      $('#mp2_movil_reg').val('+34 646 64 64 64');
+      $('#mp2_apellidos_reg').val(SURNAME);
 
-    $('#check_addons_rechaza').prop("checked", true);
-    $('#check_seguro_cancelacion_rechaza').prop("checked", true);
+      $('#check_addons_rechaza').prop("checked", true);
+      $('#check_seguro_cancelacion_rechaza').prop("checked", true);
 
-    $('#sync-payer-with-asistente-0').click();
+      $('#sync-payer-with-asistente-0').click();
 
-    $('#mp4_num_tarjeta').val('4548812049400004');
-    $('#mp4_Month').val('04').trigger('change');
-    $('#mp4_Year').val(((new Date).getFullYear() + 1).toString().substr(-2)).trigger('change');
-    $('#mp4_cvv').val('123');
-    $('#mp4_tipo_tarjeta').val('VID').trigger('change');
-    // $(window).scrollTop($('#fsCarritoBottom').offset().top);
+      $('#mp4_num_tarjeta').val('4548812049400004');
+      $('#mp4_Month').val('04').trigger('change');
+      $('#mp4_Year').val(((new Date).getFullYear() + 1).toString().substr(-2)).trigger('change');
+      $('#mp4_cvv').val('123');
+      $('#mp4_tipo_tarjeta').val('VID').trigger('change');
+      // $(window).scrollTop($('#fsCarritoBottom').offset().top);
 
-    setTimeout(function () {
-        $('#mp2_use_first_asistant_data').click();
+      setTimeout(function () {
         $('#btn_finalizar_continuar').click();
-    }, 1000);
+      }, 1000);
+    }
 }
 
 function getUserInfo() {
@@ -108,25 +111,25 @@ chrome.runtime.onMessage.addListener((message) => {
         case 'COMMAND':
             switch (message.payload) {
                 case 'change-userDefault':
-                    getDataUserFormStorage();
+                    getDataFormStorage();
                     break;
             }
     }
 });
 
-function getDataUserFormStorage() {
+function getDataFormStorage() {
     storage.get(['results'], (items) => {
-        setDataUserDefault(items.results);
-        changeDataUserDefaultIntoForm();
+        refreshDefaultUser(items.results);
+        fillForm();
     });
 }
 
-function changeDataUserDefaultIntoForm()
-{
-    $('#mp3_trato_asistente_0_' + userDefault.gender).prop( "checked", true );
-    $('#mp3_nombre_0').val(userDefault.name);
-    $('#mp2_use_first_asistant_data').click();
-    $('#mp2_email_reg').val(userDefault.email);
-    $('#mp2_email_reg2').val(userDefault.email);
-    $('#mp2_use_first_asistant_data').click();
+function refreshDefaultUser(user) {
+  if (user) {
+    userDefault.gender = user.gender;
+    userDefault.name = user.name;
+    userDefault.email = user.email;
+  }
+
+  active = user.active === 'on';
 }
