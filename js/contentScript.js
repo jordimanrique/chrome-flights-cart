@@ -47,11 +47,6 @@ function fillForm() {
       let numPax = $('div[id^="bloqueAsistente_"]').length;
       let userInfo = userDefault;
 
-      $('#mp3_trato_asistente_0_' + userDefault.gender).prop("checked", true);
-      $('#mp3_nombre_0').val(userDefault.name);
-      $('#mp2_email_reg').val(userDefault.email);
-      $('#mp2_email_reg2').val(userDefault.email);
-
       for (let indexPax = 0; indexPax < numPax; indexPax++) {
         if (indexPax !== 0) {
           userInfo = getUserInfo();
