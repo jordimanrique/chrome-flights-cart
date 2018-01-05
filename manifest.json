@@ -7,7 +7,8 @@
     "128" : "icons/airplane_128.png"
   },
   "page_action": {
-    "default_icon": "icons/airplane_128.png"
+    "default_icon": "icons/airplane_128.png",
+    "default_popup": "html/popup.html"
   },
   "background": {
     "persistent": false,
@@ -16,7 +17,7 @@
   "content_scripts": [
     {
       "matches": ["*://*/carrito/procesar_compra/*"],
-      "js": ["js/lib/jquery.js", "js/lib/jquery.colorbox-min.js", "js/contentScript.js"],
+      "js": ["js/lib/jquery.js", "js/contentScript.js"],
       "run_at": "document_start"
     }
   ],
