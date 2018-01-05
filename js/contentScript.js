@@ -57,9 +57,9 @@ function fillForm() {
       $('#mp2_nombre_reg').val(userDefault.name);
       $('#mp2_email_reg').val(userDefault.email);
       $('#mp2_email_reg2').val(userDefault.email);
-      $('#mp2_cp_reg').val('08830');
+      $('#mp2_cp_reg').val('08001');
       $('#mp2_direccion_reg').val('Carrer de les proves de ticketing');
-      $('#mp2_poblacion_reg').val('Sant Boi de Llobregat');
+      $('#mp2_poblacion_reg').val('Barcelona');
       $('#mp2_regione_reg').val('1').trigger('change');
       $('#mp2_movil_reg').val('+34 646 64 64 64');
       $('#mp2_apellidos_reg').val(SURNAME);
