@@ -115,7 +115,7 @@ function fillUserInfo(index, userInfo) {
     $('#mp3_'+ index +'_caducidad_documento_anyo').val($('#mp3_'+ index +'_caducidad_documento_anyo option:eq(3)').val());
 
     $('#mp3_tipo_documento_' + index).val(2).trigger('change');
-    $('#mp3_num_documento_' + index).val('1234567');
+    $('#mp3_num_documento_' + index).val(Math.floor(Math.random()*100000000));
 
     setTimeout(() => {
         $('#mp3_apellidos_' + index).val(SURNAME).trigger('click');
