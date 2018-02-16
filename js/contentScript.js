@@ -109,7 +109,19 @@ function fillUserInfo(index, userInfo) {
     $('#mp3_nombre_' + index).val(userInfo.name);
     $('#mp3_f_nacimiento_dia_' + index).val($('#mp3_f_nacimiento_dia_'  + index + ' option:eq(1)').val());
     $('#mp3_f_nacimiento_mes_' + index).val($('#mp3_f_nacimiento_mes_'  + index + ' option:eq(1)').val());
-    $('#mp3_f_nacimiento_anyo_' + index).val($('#mp3_f_nacimiento_anyo_'  + index + ' option:eq(1)').val());
+
+
+    $('#mp3_f_nacimiento_anyo_' + index).val($('#mp3_f_nacimiento_anyo_'  + index + ' option:eq(10)').val());
+
+    var selector = 'div #bloqueAsistente_' + index + ' > div.titulo-asistente';
+    if ($(selector).length > 0) {
+      var passengerText = $(selector)[0].innerText;
+
+      if (passengerText.match(/\(niño\)/g) !== null || passengerText.match(/\(bebe\)/g) !== null) {
+        $('#mp3_f_nacimiento_anyo_' + index).val($('#mp3_f_nacimiento_anyo_'  + index + ' option:eq(1)').val());
+      }
+    }
+
     $('#mp3_'+ index +'_caducidad_documento_dia').val($('#mp3_'+ index +'_caducidad_documento_dia option:eq(1)').val());
     $('#mp3_'+ index +'_caducidad_documento_mes').val($('#mp3_'+ index +'_caducidad_documento_mes option:eq(1)').val());
     $('#mp3_'+ index +'_caducidad_documento_anyo').val($('#mp3_'+ index +'_caducidad_documento_anyo option:eq(3)').val());
