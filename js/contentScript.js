@@ -31,8 +31,8 @@ const NAMES = [
 
 let userDefault = {
     gender: 'mr',
-    name: 'Rafael',
-    email: 'rafael.mateo@atrapalo.com',
+    name: 'DT Vuelos',
+    email: 'dt_vuelos@atrapalo.com',
     surname: SURNAME
 };
 
