@@ -50,8 +50,8 @@ function validateUserFromStorage() {
 }
 
 function checkVivaColombia() {
-  return $('span[class="companyia-segmento"][title="VivaColombia"]').length > 0 ||
-    $('span[class="companyia-segmento"][title="Viva Air Peru"]').length > 0
+  return $('span[class="companyia-segmento"][title*="Viva Air Colombia"]').length > 0 ||
+    $('span[class="companyia-segmento"][title*="Viva Air Peru"]').length > 0
 }
 
 function fillForm() {
